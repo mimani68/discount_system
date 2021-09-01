@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+
+    zarin:
+        build: .
+        restart: always
+        links:
+            - db
+        environment:
+            NODE_ENV: development
+            SECRET: 'AhVee:boz5ohl0yah8aiChaij=eg2laexae'
+
+            DATABASE_SCHEMA_NAME: zarin
+            ZARIN_SERVICE_DBNAME: zarin-staging
+            ZARIN_SERVICE_HOST: 45.92.94.137
+            ZARIN_SERVICE_PORT: 32154
+            ZARIN_SERVICE_USERNAME: zarin-admin
+            ZARIN_SERVICE_PASSWORD: nD12H0ug87Tug21X0RxC1n3we
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+        volumes:
+            - ./:/app
+        # 
+        # run service directly
+        # ----------------------------------------------
+        # command: ["npm", "run", "start:debug"]
+        # command: ["node", "--inspect=0.0.0.0", "dist/main.js"]
+        # 
+        # profiling with clinic.js
+        # ----------------------------------------------
+        # command: 
+        #     - npm install -g clinic
+        #     - clinic doctor -- node dist/main.js
+        # 
+        # direct profiling
+        # ----------------------------------------------
+        # command: ["node", "--inspect", "dist/main.js"]
+        #
+        # nest development commands
+        # ----------------------------------------------
+        command: [ "nest", "start", "--debug", "0.0.0.0:9229", "--watch" ]
+        # command: ["node", "--prof-process", "dist/main.js"]
+        # command: ["node", "--prof", "dist/main.js"]
+
+    db:
+        image: postgres:12.3
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: test
+            POSTGRES_DB: information
+            POSTGRES_USER: userDb1
+            # ALLOW_IP_RANGE: 0.0.0.0/0
+            # PGHOST: db
+            # PGDATABASE: postgres
+            # PGUSER: postgres
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        ports:
+            - 32154:5432
+        volumes:
+            - zarin-postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+    zarin-postgres-data:
