@@ -16,15 +16,14 @@ export class ShopController {
     ) { }
 
     @ApiOperation({
-        summary: 'shop creator',
-        description: 'create a new shop'
+        summary: 'Using discount for specific invoice',
     })
     @ApiBadRequestResponse()
     @ApiUnauthorizedResponse()
     @Post()
     @UsePipes(ValidationPipe)
     async useDiscount(@Body() dto: CreateShopDto) {
-        return await this.service.create(dto);
+        return await this.service.useDiscountForInvoice(dto);
     }
 
 }

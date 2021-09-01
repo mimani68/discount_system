@@ -13,7 +13,7 @@ export class ShopService {
         private readonly repository: Repository < ShopEntity >,
     ) {}
 
-    async create(dto: CreateShopDto) {
+    async useDiscountForInvoice(dto: CreateShopDto) {
         return "salam";
         // const { title } = dto;
         // const entity = new ShopEntity();
