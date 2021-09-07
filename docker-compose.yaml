@@ -52,9 +52,9 @@ services:
         image: postgres:12.3
         restart: always
         environment:
-            POSTGRES_PASSWORD: test
-            POSTGRES_DB: information
+            POSTGRES_DB: zarin-staging
             POSTGRES_USER: userDb1
+            POSTGRES_PASSWORD: test
             # ALLOW_IP_RANGE: 0.0.0.0/0
             # PGHOST: db
             # PGDATABASE: postgres
@@ -69,5 +69,11 @@ services:
         volumes:
             - zarin-postgres-data:/var/lib/postgresql/data
 
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8081:8080
+            
 volumes:
     zarin-postgres-data:

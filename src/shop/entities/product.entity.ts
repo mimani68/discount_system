@@ -16,7 +16,7 @@ export class ProductEntity extends BaseEntity {
     id: string;
 
     @ApiProperty()
-    @Column({ type: 'string', nullable: true })
+    @Column({ type: 'text', nullable: true })
     title: string;
 
     // @ManyToOne(type => UserEntity, user => user.likes, { eager: true })

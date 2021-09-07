@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import appConfig from '../config/application';
+import { UsersModule } from 'src/users/users.module';
 import { JwtStrategy } from './jwt.strategy';
 import { TokenRepository } from './repositories/token.repository';
 import { VerificationCodeRepository } from './repositories/verificationcode.repository';
@@ -22,7 +23,9 @@ import { AuthenticateController } from './authenticate.controller';
       signOptions: {
         expiresIn: appConfig.zarin.jwtLifeTime
       }
-    })],
+    }),
+    UsersModule
+  ],
   providers: [AuthenticateService, JwtStrategy],
   controllers: [AuthenticateController],
   exports: [JwtStrategy, PassportModule]

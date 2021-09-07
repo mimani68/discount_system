@@ -64,7 +64,7 @@ export class UserEntity extends BaseEntity {
 
     @ApiProperty()
     @Column({
-        type: "string",
+        type: "text",
         array: true,
         nullable: true
     })
