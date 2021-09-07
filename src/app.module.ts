@@ -6,8 +6,8 @@ import { AppService         } from 'src/app.service';
 import { AppController      } from 'src/app.controller';
 import { AuthenticateModule } from 'src/authenticate/authenticate.module';
 import { ShopModule         } from 'src/shop/shop.module';
-import { UserModule         } from 'src/user/user.module';
-import { UserEntity         } from 'src/user/entities/user.entity';
+import { UsersModule        } from 'src/users/users.module';
+import { UserEntity         } from 'src/users/entities/user.entity';
 import { ProductEntity      } from 'src/shop/entities/product.entity';
 import { DiscountEntity     } from 'src/shop/entities/discount.entity';
 
@@ -26,7 +26,7 @@ import { DiscountEntity     } from 'src/shop/entities/discount.entity';
     }),
     AuthenticateModule,
     ShopModule,
-    UserModule
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

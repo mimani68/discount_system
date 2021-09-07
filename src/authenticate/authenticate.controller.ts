@@ -1,13 +1,13 @@
 import { Controller, Post, Body, UsePipes, ValidationPipe, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiResponse, ApiCreatedResponse, ApiUnauthorizedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
+
 import { AuthenticateService } from './authenticate.service';
 import { LoginUserDto } from './dtos/loginuser.dto';
 import { PhoneVerificationDto } from './dtos/phoneverification.dto';
 import { RefreshTokenDto } from './dtos/refreshtoken.dto';
-import { ApiTags, ApiResponse, ApiCreatedResponse, ApiUnauthorizedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { VerificationCodeResponseDto } from './dtos/verificationcorereesponse.dto';
 import { AdminLoginDto } from './entities/admin-login.dto';
-import { LoginGuestDto } from './dtos/loginguest.dto';
 
 @ApiTags('authenticate')
 @Controller('auth')
@@ -77,18 +77,5 @@ export class AuthenticateController {
     @UsePipes(ValidationPipe)
     async loginAdmin(@Body() dto: AdminLoginDto) {
         return this.authService.loginAdmin(dto.email, dto.password);
-    }
-
-    @ApiOperation({
-        summary: 'get thee guest access and refresh token',
-        description: 'get thee guest access and refresh token'
-    })
-    @ApiCreatedResponse({ type: RefreshTokenDto })
-    @ApiUnauthorizedResponse({ description: 'Unauthorized or Timeout' })
-    @ApiResponse({ description: 'User Blocked or Application incorrect', status: 423 })
-    @Post('guest/accesstoken')
-    @UsePipes(ValidationPipe)
-    async guestAccessToken(@Body() dto: LoginGuestDto) {
-        return this.authService.guestAccessToken(dto);
     }
 }
