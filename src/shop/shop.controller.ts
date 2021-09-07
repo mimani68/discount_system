@@ -2,7 +2,8 @@ import { Controller, Post, UseGuards, UsePipes, ValidationPipe, Body } from '@ne
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { CreateShopDto } from './dtos/create-shop.dto';
+import { RequestDiscountDto } from './dtos/request-discount.dto';
+import { ResponceDiscountDto } from './dtos/responce-discount.dto';
 import { ShopService } from './shop.service';
 
 @ApiBearerAuth()
@@ -22,8 +23,8 @@ export class ShopController {
     @ApiUnauthorizedResponse()
     @Post()
     @UsePipes(ValidationPipe)
-    async useDiscount(@Body() dto: CreateShopDto) {
-        return await this.service.useDiscountForInvoice(dto);
+    async useDiscount(@Body() dto: RequestDiscountDto): Promise<ResponceDiscountDto> {
+        return await this.service.useDiscountForInvoice(dto)
     }
 
 }

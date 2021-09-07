@@ -1,26 +1,24 @@
 import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { DiscountEntity } from './entities/discount.entity';
+import { ProductEntity } from './entities/product.entity';
 import { ShopController } from './shop.controller';
 import { ShopService } from './shop.service';
-import { ShopTagController } from './tag/shop-tag.controller';
-import { ShopTagService } from './tag/shop-tag.service';
-
 
 @Module({
   imports: [HttpModule, TypeOrmModule.forFeature([
-    ShopEntity,
+    ProductEntity,
+    DiscountEntity
   ])],
   controllers: [
     ShopController,
-    ShopTagController
   ],
   providers: [
     ShopService,
-    ShopTagService,
   ],
   exports: [
-    ShopService,,
-    ShopTagService
+    ShopService,
   ]
 })
 export class ShopModule { }
