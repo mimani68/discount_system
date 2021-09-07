@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 
 import { BaseEntity } from './base.entity';
-// import { UserEntity } from "../../users/entities/user.entity";
+import { CategoryEntity } from "./category.entity";
 
 @Entity({ name: 'zarin.product' })
 export class ProductEntity extends BaseEntity {
@@ -19,8 +19,20 @@ export class ProductEntity extends BaseEntity {
     @Column({ type: 'text', nullable: true })
     title: string;
 
-    // @ManyToOne(type => UserEntity, user => user.likes, { eager: true })
+    @ApiProperty()
+    @Column({ type: 'json', nullable: true })
+    attribute: string;
+
+    @ApiProperty()
+    @Column({ type: 'text', nullable: true })
+    sku: string;
+
+    @ApiProperty()
+    @Column({ type: "text", nullable: true })
+    status: string;
+
+    @ManyToOne(type => CategoryEntity, user => user.user, { eager: true })
     // @JoinColumn({ name: "userId" })
-    // user: UserEntity;
+    category: CategoryEntity;
 
 }

@@ -14,6 +14,7 @@ import { BaseEntity as UserBaseEntity } from 'src/users/entities/base.entity';
 import { UserEntity                   } from 'src/users/entities/user.entity';
 import { BaseEntity as ShopBaseEntity } from 'src/shop/entities/base.entity';
 import { ProductEntity                } from 'src/shop/entities/product.entity';
+import { CategoryEntity               } from 'src/shop/entities/category.entity';
 import { DiscountEntity               } from 'src/shop/entities/discount.entity';
 
 @Module({
@@ -29,7 +30,7 @@ import { DiscountEntity               } from 'src/shop/entities/discount.entity'
       entities: [ 
         TokenEntity, AuthBaseEntity, VerificationCodeEntity,
         UserEntity, UserBaseEntity,
-        ShopBaseEntity, ProductEntity, DiscountEntity
+        ShopBaseEntity, ProductEntity, DiscountEntity, CategoryEntity
       ],
       synchronize: true,
     }),

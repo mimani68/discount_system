@@ -7,7 +7,6 @@ import { CreateUserDto } from './dtos/createuser.dto'
 import { UserEntity, UserRole, UserStatus } from './entities/user.entity';
 import { UpdateUserDto } from './dtos/updateuser.dto';
 import { UpdateFcmTokenDto } from './dtos/update-fcm-token.dto';
-import { CreateGuestDto } from './dtos/createguest.dto';
 import { FindUserByPhone } from './dtos/find-user -by-phone.dto';
 
 @Injectable()
@@ -26,23 +25,6 @@ export class UsersService {
         entity.phone = phone;
         entity.applications = [appConfig.zarin.title];
         entity.roles = [UserRole.USER];
-        entity.status = UserStatus.VERIFIED;
-
-        return await this.repository.save(entity);
-    }
-
-
-    async createGuest(dto: CreateGuestDto): Promise<UserEntity> {
-        const currentuser = await this.repository.findOne({ guestId: dto.guestId });
-        if (currentuser != undefined)
-            throw new ConflictException({ message: 'Already Exists', code: '409' });
-
-        const { guestId } = dto;
-
-        const entity = new UserEntity();
-        entity.guestId = guestId;
-        entity.applications = [appConfig.zarin.title];
-        entity.roles = [UserRole.GUEST];
         entity.status = UserStatus.VERIFIED;
 
         return await this.repository.save(entity);
@@ -111,10 +93,6 @@ export class UsersService {
     async getByPhone(phone: string) {
 
         return await this.repository.findByPhone(phone);
-    }
-
-    async getByGuestId(guestId: string) {
-        return await this.repository.findOne({ guestId });
     }
 
     async blockUser(id: string) {

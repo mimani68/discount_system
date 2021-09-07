@@ -30,10 +30,6 @@ export class UserEntity extends BaseEntity {
     }
 
     @ApiProperty()
-    @Column({ type: 'text', nullable: true, name:'guest_id' })
-    guestId: string;
-
-    @ApiProperty()
     @Column({ type: 'text', nullable: true })
     phone: string;
 
