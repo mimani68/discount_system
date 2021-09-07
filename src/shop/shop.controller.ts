@@ -1,6 +1,7 @@
-import { Controller, Post, UseGuards, UsePipes, ValidationPipe, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, UsePipes, ValidationPipe, Response, Body, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Response as ExpressResponse } from 'express'
 
 import { RequestDiscountDto } from './dtos/request-discount.dto';
 import { ResponceDiscountDto } from './dtos/responce-discount.dto';
@@ -8,7 +9,7 @@ import { ShopService } from './shop.service';
 
 @ApiBearerAuth()
 @ApiTags('shop')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('shop')
 export class ShopController {
 
@@ -17,14 +18,29 @@ export class ShopController {
     ) { }
 
     @ApiOperation({
-        summary: 'Using discount for specific invoice',
+        summary: 'Using discount for specific product',
     })
     @ApiBadRequestResponse()
     @ApiUnauthorizedResponse()
-    @Post()
+    @Post("/discount")
     @UsePipes(ValidationPipe)
-    async useDiscount(@Body() dto: RequestDiscountDto): Promise<ResponceDiscountDto> {
-        return await this.service.useDiscountForInvoice(dto)
+    async useDiscount(
+        @Body() dto: RequestDiscountDto,
+        @Response() res: ExpressResponse
+    ): Promise<any> {
+        this.service.useDiscountForInvoice(dto)
+            .then( data => {
+                return res.status(HttpStatus.OK)
+                .json({
+                    canUse: true
+                })
+            })
+            .catch( err => {
+                return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                    canUse: false
+                })
+            })
     }
 
 }

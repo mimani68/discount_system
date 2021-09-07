@@ -29,6 +29,10 @@ export class DiscountEntity extends BaseEntity {
     product: ProductEntity;
 
     @ApiProperty()
+    @Column({ type: 'varchar', length: 100, nullable: false })
+    code: string;
+
+    @ApiProperty()
     @Column({ type: 'timestamp', nullable: true, default: null })
     usedAt: Date;
 
