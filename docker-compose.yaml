@@ -10,6 +10,7 @@ services:
         environment:
             NODE_ENV: development
             SECRET: 'AhVee:boz5ohl0yah8aiChaij=eg2laexae'
+            JWT_LIFETIME: '40w'
 
             DATABASE_SCHEMA_NAME: zarin
             ZARIN_SERVICE_DBNAME: zarin-staging

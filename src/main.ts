@@ -31,7 +31,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .addBearerAuth()
     .addServer('/api/v1', 'version 1')
-    .setContact('Mahdi Imani', 'imani.mahdi@gmail.com')
+    .setContact('Mahdi Imani', 'https://github.com/mimani68/discount_system', 'imani.mahdi@gmail.com')
     .setTitle('Zarin Backend')
     .setDescription('This is backend of stories microservices')
     .setVersion('1.0')

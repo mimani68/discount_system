@@ -2,7 +2,7 @@ import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserEntity } from './entities/user.entity';
-import { ShopController } from './user.controller';
+import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 
@@ -11,7 +11,7 @@ import { UserService } from './user.service';
     UserEntity,
   ])],
   controllers: [
-    ShopController,
+    UserController,
   ],
   providers: [
     UserService,

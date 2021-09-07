@@ -3,11 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as crypto from 'crypto';
 
 import { LoginUserDto } from './dtos/loginuser.dto';
-import { UsersService } from 'src/users/users.service';
-import { CreateUserDto } from 'src/users/dtos/createuser.dto';
 import { PayloadDto } from './dtos/payload.dto';
-import { UserStatus, Application } from 'src/users/entities/user.entity';
-import { NotificationService } from 'src/notification/notification.service';
 import { PhoneVerificationDto } from './dtos/phoneverification.dto';
 import { VerificationCodeRepository } from './repositories/verificationcode.repository'
 import { VerificationCodeEntity } from './entities/verificationcode.entity';
@@ -16,9 +12,6 @@ import { TokenRepository } from './repositories/token.repository';
 import { TokenEntity } from './entities/token.entity';
 import { RefreshTokenDto } from './dtos/refreshtoken.dto';
 import { LoginGuestDto } from './dtos/loginguest.dto';
-import { CreateGuestDto } from 'src/users/dtos/createguest.dto';
-import { UserCreditService } from 'src/subscription/user-credit/user-credit.service';
-import { AccountTypeService } from 'src/subscription/account-type/account-type.service';
 
 
 @Injectable()
@@ -26,12 +19,10 @@ export class AuthenticateService {
 
     constructor(
         private jwtService: JwtService,
-        private userService: UsersService,
-        private notifService: NotificationService,
+        private userService: UserService,
         private readonly codeRepository: VerificationCodeRepository,
-        private readonly tokenRepository: TokenRepository,
-        private readonly creditService: UserCreditService,
-        private readonly acTypeService: AccountTypeService) { }
+        private readonly tokenRepository: TokenRepository
+    ) { }
 
 
     async accessToken(dto: LoginUserDto) {
@@ -46,10 +37,11 @@ export class AuthenticateService {
             throw new UnauthorizedException({ message: 'Unauthorized or Timeout', code: 101 });
 
         //if the code exists and it is valid, first of all delete it
-        await this.codeRepository.delete({ id: currentCode.id });
+        // await this.codeRepository.delete({ id: currentCode.id });
 
         //check if the user by this phone already exists or not?
         let user = await this.userService.getByPhone(phone);
+
         //if user does not exists, first create and store it
         if (user == undefined) {
             isNew = true;
@@ -57,6 +49,7 @@ export class AuthenticateService {
             user = await this.userService.create(userDto);
             this.setFreeCredit(user.id);
         }
+
         //if user exists and currently is blocked or the application is not current Application
         //then just reject it
         if (user.status.includes(UserStatus.BLOCKED) ||
