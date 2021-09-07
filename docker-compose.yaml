@@ -3,7 +3,7 @@ version: "3.7"
 services:
 
     zarin:
-        image: node:14-slim
+        build: .
         restart: always
         links:
             - db
