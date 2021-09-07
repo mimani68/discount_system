@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import appConfig from '../config/application';
 import { JwtStrategy } from './jwt.strategy';
 import { TokenRepository } from './repositories/token.repository';
 import { VerificationCodeRepository } from './repositories/verificationcode.repository';
@@ -17,9 +18,9 @@ import { AuthenticateController } from './authenticate.controller';
       defaultStrategy: 'jwt'
     }),
     JwtModule.register({
-      secret: process.env.SECRET,
+      secret: appConfig.zarin.jwtSalt,
       signOptions: {
-        expiresIn: process.env.JWT_LIFETIME
+        expiresIn: appConfig.zarin.jwtLifeTime
       }
     })],
   providers: [AuthenticateService, JwtStrategy],

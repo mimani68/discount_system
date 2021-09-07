@@ -12,4 +12,11 @@ export class UserService {
         private readonly repository: Repository < any >,
     ) {}
 
+    async getByPhone(phone: string): Promise<UserEntity> {
+        let user = new UserEntity()
+        user.id = '12'
+        user.username = "mahdi"
+        return Promise.resolve(user)
+    }
+
 }

@@ -3,10 +3,9 @@ import { Entity, Column } from "typeorm";
 
 import { BaseEntity } from './base.entity';
 
-export enum UserState {
-    UNACTIVATED = 1,
-    ACTIVE = 2,
-    DEACTIVE = 3,
+export const UserStatus = {
+    ACTIVE: 'ACTIVE',
+    BLOCKED: 'BLOCKED',
 }
 
 @Entity({ name: 'zarin.discount' })
@@ -29,7 +28,11 @@ export class UserEntity extends BaseEntity {
     password: string;
 
     @ApiProperty()
+    @Column({ type: 'array', nullable: true })
+    applications: string[];
+
+    @ApiProperty()
     @Column({ type: 'string', nullable: true })
-    status: UserState;
+    status: string;
 
 }
