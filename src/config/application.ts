@@ -6,5 +6,6 @@ export default {
     title: 'Zarin',
     jwtLifeTime: process.env.JWT_LIFETIME,
     jwtSalt: process.env.SECRET,
+    port: process.env.PORT
   }
 }

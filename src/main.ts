@@ -1,6 +1,7 @@
 import { NestFactory                        } from '@nestjs/core';
 import { ValidationPipe                     } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder     } from '@nestjs/swagger';
+import appConfig from './config/application'
 import * as timeout from 'connect-timeout';
 
 import { AppModule } from './app.module';
@@ -39,8 +40,8 @@ async function bootstrap() {
     .addTag('shop')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/docs/api/', app, document);
 
-  await app.listen(process.env.PORT);
+  await app.listen(appConfig.zarin.port);
 }
 bootstrap();
