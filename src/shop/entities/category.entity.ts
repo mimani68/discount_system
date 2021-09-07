@@ -1,10 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, Column, OneToMany } from "typeorm";
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 
 import { BaseEntity } from './base.entity';
 import { ProductEntity } from "./product.entity";
 
-@Entity({ name: 'zarin.category' })
+@Entity({ name: 'zarin.categories' })
 export class CategoryEntity extends BaseEntity {
 
     constructor() {
@@ -20,6 +20,7 @@ export class CategoryEntity extends BaseEntity {
     parent: string;
 
     @OneToMany(() => ProductEntity, el => el.category)
+    @JoinColumn({ name: "products" })
     products: ProductEntity[];
 
 }

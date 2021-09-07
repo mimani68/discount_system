@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from "typeorm";
+import { Entity, Column, OneToMany, JoinColumn } from "typeorm";
 import { BaseEntity } from './base.entity';
 import { ApiProperty } from "@nestjs/swagger";
 import { DiscountEntity } from "src/shop/entities/discount.entity";
@@ -68,6 +68,7 @@ export class UserEntity extends BaseEntity {
     applications: string[];
 
     @OneToMany(type => DiscountEntity, el => el.user)
+    @JoinColumn({ name: "discounts" })
     discounts: DiscountEntity[];
 
     @ApiProperty()
@@ -80,6 +81,6 @@ export class UserEntity extends BaseEntity {
 
     @ApiProperty()
     @Column({ type: 'jsonb', nullable: true })
-    other: object;
+    other: object; 
 
 }
