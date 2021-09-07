@@ -1,5 +1,5 @@
 import { Entity, Column } from "typeorm";
-import { BaseEntity } from '../../users/entities/base.entity';
+import { BaseEntity } from './base.entity';
 
 
 @Entity({ name: 'zarin.tokens' })

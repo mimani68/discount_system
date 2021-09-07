@@ -1,11 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 
-import { BaseEntity } from '../../users/entities/base.entity';
-import { ShopEntity } from "./shop.entity";
-import { UserEntity } from "../../users/entities/user.entity";
+import { BaseEntity } from './base.entity';
+// import { UserEntity } from "../../users/entities/user.entity";
 
-@Entity({ name: 'zarin.discount' })
+@Entity({ name: 'zarin.product' })
 export class ProductEntity extends BaseEntity {
 
     constructor() {
@@ -14,17 +13,14 @@ export class ProductEntity extends BaseEntity {
 
     @ApiProperty()
     @Column({ type: 'uuid', nullable: true })
-    userId: string;
-
-    @ManyToOne(type => UserEntity, user => user.likes, { eager: true })
-    @JoinColumn({ name: "userId" })
-    user: UserEntity;
+    id: string;
 
     @ApiProperty()
-    @Column({ type: 'uuid', nullable: true })
-    shopId: string;
+    @Column({ type: 'string', nullable: true })
+    title: string;
 
-    @ManyToOne(type => ShopEntity, shop => shop.likes, { eager: true })
-    @JoinColumn({ name: "shopId" })
-    shop: ShopEntity;
+    // @ManyToOne(type => UserEntity, user => user.likes, { eager: true })
+    // @JoinColumn({ name: "userId" })
+    // user: UserEntity;
+
 }

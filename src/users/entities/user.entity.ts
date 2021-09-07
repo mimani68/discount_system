@@ -64,9 +64,8 @@ export class UserEntity extends BaseEntity {
 
     @ApiProperty()
     @Column({
-        type: "text",
+        type: "string",
         array: true,
-        enum: Application,
         nullable: true
     })
     applications: string[];

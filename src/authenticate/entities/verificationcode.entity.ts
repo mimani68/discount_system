@@ -1,5 +1,5 @@
 import { Entity, Column, CreateDateColumn } from "typeorm";
-import { BaseEntity } from '../../users/entities/base.entity';
+import { BaseEntity } from './base.entity';
 
 
 @Entity({ name: 'zarin.verification_codes' })

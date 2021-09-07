@@ -3,7 +3,8 @@ version: "3.7"
 services:
 
     zarin:
-        build: .
+        # build: .
+        image: node:12-alpine
         restart: always
         links:
             - db
@@ -21,12 +22,13 @@ services:
         ports:
             - "3000:3000"
             - "9229:9229"
+        working_dir: /app
         volumes:
             - ./:/app
         # 
         # run service directly
         # ----------------------------------------------
-        # command: ["npm", "run", "start:debug"]
+        command: ["npm", "run", "start:debug"]
         # command: ["node", "--inspect=0.0.0.0", "dist/main.js"]
         # 
         # profiling with clinic.js
@@ -41,9 +43,10 @@ services:
         #
         # nest development commands
         # ----------------------------------------------
-        command: [ "nest", "start", "--debug", "0.0.0.0:9229", "--watch" ]
+        # command: [ "nest", "start", "--debug", "0.0.0.0:9229", "--watch" ]
         # command: ["node", "--prof-process", "dist/main.js"]
         # command: ["node", "--prof", "dist/main.js"]
+
 
     db:
         image: postgres:12.3

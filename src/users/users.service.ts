@@ -1,10 +1,12 @@
-import { Injectable, HttpException, HttpStatus, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, HttpStatus, NotFoundException, ConflictException } from '@nestjs/common';
+import * as crypto from 'crypto';
+
+import appConfig from 'src/config/application';
 import { UserRepository } from './repositories/user.repository';
 import { CreateUserDto } from './dtos/createuser.dto'
 import { UserEntity, UserRole, UserStatus } from './entities/user.entity';
 import { UpdateUserDto } from './dtos/updateuser.dto';
 import { UpdateFcmTokenDto } from './dtos/update-fcm-token.dto';
-import * as crypto from 'crypto';
 import { CreateGuestDto } from './dtos/createguest.dto';
 import { FindUserByPhone } from './dtos/find-user -by-phone.dto';
 
@@ -22,7 +24,7 @@ export class UsersService {
 
         const entity = new UserEntity();
         entity.phone = phone;
-        entity.applications = [Application.ZARIN];
+        entity.applications = [appConfig.zarin.title];
         entity.roles = [UserRole.USER];
         entity.status = UserStatus.VERIFIED;
 
@@ -39,7 +41,7 @@ export class UsersService {
 
         const entity = new UserEntity();
         entity.guestId = guestId;
-        entity.applications = [Application.ZARIN];
+        entity.applications = [appConfig.zarin.title];
         entity.roles = [UserRole.GUEST];
         entity.status = UserStatus.VERIFIED;
 
@@ -57,7 +59,7 @@ export class UsersService {
         currentUser.email = email;
         currentUser.displayName = displayName;
         currentUser.other = other;
-        currentUser.fcmToken = fcmToken;
+        // currentUser.fcmToken = fcmToken;
         if (password != undefined && password.length > 0) {
             currentUser.salt = crypto.randomBytes(16).toString('hex');
             currentUser.password = crypto.pbkdf2Sync(password,
@@ -74,7 +76,7 @@ export class UsersService {
             throw new NotFoundException({ message: 'not found', code: HttpStatus.NOT_FOUND.toString() });
 
         const { fcmToken } = dto;
-        currentUser.fcmToken = fcmToken;
+        // currentUser.fcmToken = fcmToken;
 
         return await this.repository.save(currentUser);
     }

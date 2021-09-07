@@ -7,7 +7,6 @@ import { LoginUserDto } from './dtos/loginuser.dto';
 import { PhoneVerificationDto } from './dtos/phoneverification.dto';
 import { RefreshTokenDto } from './dtos/refreshtoken.dto';
 import { VerificationCodeResponseDto } from './dtos/verificationcorereesponse.dto';
-import { AdminLoginDto } from './entities/admin-login.dto';
 
 @ApiTags('authenticate')
 @Controller('auth')
@@ -66,16 +65,4 @@ export class AuthenticateController {
         return this.authService.phoneVerification(dto);
     }
 
-    @ApiOperation({
-        summary: 'admin login via email and password',
-        description: 'admin login via email and password'
-    })
-    @ApiCreatedResponse({ type: RefreshTokenDto })
-    @ApiUnauthorizedResponse({ description: 'Unauthorized or Timeout' })
-    @ApiResponse({ description: 'User Blocked or Application incorrect', status: 423 })
-    @Post('/admin/login')
-    @UsePipes(ValidationPipe)
-    async loginAdmin(@Body() dto: AdminLoginDto) {
-        return this.authService.loginAdmin(dto.email, dto.password);
-    }
 }
