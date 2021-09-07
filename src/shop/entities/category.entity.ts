@@ -12,18 +12,14 @@ export class CategoryEntity extends BaseEntity {
     }
 
     @ApiProperty()
-    @Column({ type: 'uuid', nullable: true })
-    id: string;
-
-    @ApiProperty()
     @Column({ type: 'text', nullable: true })
     title: string;
 
     @ApiProperty()
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'uuid', nullable: true })
     parent: string;
 
-    @OneToMany(() => ProductEntity, el => el.id)
-    user: ProductEntity[];
+    @OneToMany(() => ProductEntity, el => el.category)
+    products: ProductEntity[];
 
 }

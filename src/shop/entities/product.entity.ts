@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, ManyToOne, OneToMany } from "typeorm";
 
 import { BaseEntity } from './base.entity';
 import { CategoryEntity } from "./category.entity";
+import { DiscountEntity } from "./discount.entity";
 
 @Entity({ name: 'zarin.product' })
 export class ProductEntity extends BaseEntity {
@@ -10,10 +11,6 @@ export class ProductEntity extends BaseEntity {
     constructor() {
         super();
     }
-
-    @ApiProperty()
-    @Column({ type: 'uuid', nullable: true })
-    id: string;
 
     @ApiProperty()
     @Column({ type: 'text', nullable: true })
@@ -31,8 +28,10 @@ export class ProductEntity extends BaseEntity {
     @Column({ type: "text", nullable: true })
     status: string;
 
-    @ManyToOne(type => CategoryEntity, user => user.user, { eager: true })
-    // @JoinColumn({ name: "userId" })
+    @ManyToOne(() => CategoryEntity, el => el.id, { eager: true })
     category: CategoryEntity;
+
+    @OneToMany(() => DiscountEntity, el => el.product)
+    discounts: DiscountEntity[];
 
 }

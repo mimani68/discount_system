@@ -14,4 +14,8 @@ export abstract class BaseEntity {
     @ApiProperty()
     @UpdateDateColumn({ type: 'timestamp', name:'modified_date', default: () => 'now()' })
     modifiedDate: Date;
+
+    @ApiProperty()
+    @UpdateDateColumn({ type: 'timestamp', name:'deleted_date', nullable: true})
+    deletedDate: Date;
 }
